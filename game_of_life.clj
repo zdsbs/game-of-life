@@ -11,3 +11,7 @@
 (defn single-tick [cells neighborhoods state-changer]
   (map state-changer cells neighborhoods))
 
+(defn create-neighborhoods [cells next-to?]
+  (let [next-to-collector (fn [cell] (filter #(next-to? cell %) cells))]
+        (map next-to-collector cells)))
+
