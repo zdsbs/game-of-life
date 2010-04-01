@@ -1,5 +1,5 @@
 (ns game-of-life-cell-types-test
-  (:use clojure.test game-of-life-cell-types))
+  (:use clojure.test game-of-life-cell-types game-of-life))
 
 (deftest abs?-test
          (is (= 2 (abs 2)))
@@ -44,5 +44,29 @@
          (is (= false (next-to-2D-cartesian? [0 [3 3]] [0 [5 5]])))
          (is (= false (next-to-2D-cartesian? [0 [3 3]] [0 [3 1]])))
          (is (= false (next-to-2D-cartesian? [0 [3 3]] [0 [-2 -2]]))))
+
+(deftest single-tick-stable-block-test
+         (let [state-changer (state-changer-factory alive-positioned-cell? kill-positioned-cell live-positioned-cell)
+               initial  [[1 [0 0]] [1 [0 1]] 
+                         [1 [1 0]] [1 [1 1]]] 
+               expected [[1 [0 0]] [1 [0 1]] 
+                         [1 [1 0]] [1 [1 1]]]]
+           (is (= expected (single-tick initial (create-neighborhoods initial next-to-2D-cartesian?) state-changer))))
+         )
+
+(deftest single-tick-stable-blinker-test
+         (let [state-changer (state-changer-factory alive-positioned-cell? kill-positioned-cell live-positioned-cell)
+               up-down  [
+                         [0 [0 0]] [1 [0 1]] [0 [0 2]] 
+                         [0 [1 0]] [1 [1 1]] [0 [1 2]] 
+                         [0 [2 0]] [1 [2 1]] [0 [2 2]] ]
+               side-to-side [
+                         [0 [0 0]] [0 [0 1]] [0 [0 2]] 
+                         [1 [1 0]] [1 [1 1]] [1 [1 2]] 
+                         [0 [2 0]] [0 [2 1]] [0 [2 2]] ]
+               ]
+           (is (= side-to-side (single-tick up-down (create-neighborhoods up-down next-to-2D-cartesian?) state-changer)))
+           (is (= up-down (single-tick side-to-side (create-neighborhoods side-to-side next-to-2D-cartesian?) state-changer))))
+         )
 
 (run-tests 'game-of-life-cell-types-test)
