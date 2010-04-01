@@ -24,18 +24,18 @@
          )
 
 (deftest single-tick-test
-         (is (= [0]   (single-tick [1 1]        [[1]]             cell-state-changer-0-1)))
-         (is (= [0]   (single-tick [1 1 0]      [[1 0]]           cell-state-changer-0-1)))
-         (is (= [0]   (single-tick [1 0]        [[0]]             cell-state-changer-0-1)))
-         (is (= [1]   (single-tick [1 1 1]      [[1 1]]           cell-state-changer-0-1)))
-         (is (= [0]   (single-tick [0 1 1]      [[1 1]]           cell-state-changer-0-1)))
-         (is (= [0]   (single-tick [0 1 1 1 1]  [[1 1 1 1]]       cell-state-changer-0-1)))
-         (is (= [1]   (single-tick [0 1 1 1]    [[1 1 1]]         cell-state-changer-0-1)))
-         (is (= [0 0] (single-tick [0 0 1 1]    [[0 1 1] [0 1 1]] cell-state-changer-0-1)))
-         (is (= [0 0] (single-tick [1 1]        [[1] [1]]         cell-state-changer-0-1)))
-         (is (= [1 1] (single-tick [1 1 1]      [[1 1] [1 1]]     cell-state-changer-0-1)))
-         (is (= [1 1] (single-tick [1 0 1 1]    [[0 1 1] [1 1 1]] cell-state-changer-0-1)))
-         (is (= [1 1] (single-tick [1 1 1 1]    [[1 1 1] [1 1 1]] cell-state-changer-0-1)))
+         (is (= [0]   (single-tick [1]    [[1]]             cell-state-changer-0-1)))
+         (is (= [0]   (single-tick [1]    [[1 0]]           cell-state-changer-0-1)))
+         (is (= [0]   (single-tick [1]    [[0]]             cell-state-changer-0-1)))
+         (is (= [1]   (single-tick [1]    [[1 1]]           cell-state-changer-0-1)))
+         (is (= [0]   (single-tick [0]    [[1 1]]           cell-state-changer-0-1)))
+         (is (= [0]   (single-tick [0]    [[1 1 1 1]]       cell-state-changer-0-1)))
+         (is (= [1]   (single-tick [0]    [[1 1 1]]         cell-state-changer-0-1)))
+         (is (= [0 0] (single-tick [0 0]  [[0 1 1] [0 1 1]] cell-state-changer-0-1)))
+         (is (= [0 0] (single-tick [1 1]  [[1] [1]]         cell-state-changer-0-1)))
+         (is (= [1 1] (single-tick [1 1]  [[1 1] [1 1]]     cell-state-changer-0-1)))
+         (is (= [1 1] (single-tick [1 0]  [[0 1 1] [1 1 1]] cell-state-changer-0-1)))
+         (is (= [1 1] (single-tick [1 1]  [[1 1 1] [1 1 1]] cell-state-changer-0-1)))
          )
 
 (defn always-next-to-true? [cellA cellB] true)
@@ -43,4 +43,5 @@
 (deftest create-neighborhoods-test
           (is (= [[0 1] [0 1]] (create-neighborhoods [0 1] always-next-to-true?)))
          )
+
 (run-tests 'game-of-life-test)
